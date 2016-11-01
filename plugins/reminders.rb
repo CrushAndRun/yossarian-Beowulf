@@ -19,7 +19,7 @@ class Reminders	< YossarianPlugin
 	end
 	
 	def usage
-		'!remind <count> <unit> <message> - Set a reminder message for a time in the future.'
+		'!remind <count> <unit> <message> - Set a reminder message for a time in the future, 4 hours max.'
 	end
 	
 	def match(cmd)
@@ -45,7 +45,7 @@ class Reminders	< YossarianPlugin
 		end
 
 		if secs <= 14400 && @threads < 5
-			m.reply "I'll tell you about #{msg} in #{secs} second(s).", true
+			m.reply "I'll remind you to #{msg} in #{secs} second(s).", true
 
 			Thread.new do
 				@threads += 1
