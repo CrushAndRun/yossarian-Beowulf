@@ -1,4 +1,5 @@
-#  -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
 #  yossarian_plugin.rb
 #  Author: William Woodruff
 #  ------------------------
@@ -8,13 +9,13 @@
 #  http://opensource.org/licenses/MIT
 
 class YossarianPlugin
-	# default usage stub
-	def usage
-		''
-	end
+  # default usage stub
+  def usage
+    ""
+  end
 
-	#default match stub
-	def match?(cmd)
-		false
-	end
+  #default match stub
+  def match?(_cmd)
+    false
+  end
 end

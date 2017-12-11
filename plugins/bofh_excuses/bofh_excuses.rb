@@ -1,4 +1,5 @@
-#  -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
 #  bofh_excuses.rb
 #  Author: William Woodruff
 #  ------------------------
@@ -9,28 +10,28 @@
 #  This code is licensed by William Woodruff under the MIT License.
 #  http://opensource.org/licenses/MIT
 
-require_relative '../yossarian_plugin'
+require_relative "../yossarian_plugin"
 
 class BOFHExcuses < YossarianPlugin
-	include Cinch::Plugin
-	use_blacklist
+  include Cinch::Plugin
+  use_blacklist
 
-	EXCUSES_FILE = File.expand_path(File.join(File.dirname(__FILE__), 'bofh_excuses.txt'))
-	EXCUSES = File.readlines(EXCUSES_FILE)
+  EXCUSES_FILE = File.expand_path(File.join(File.dirname(__FILE__), "bofh_excuses.txt"))
+  EXCUSES = File.readlines(EXCUSES_FILE)
 
-	def usage
-		'!bofh <question> - Fetch a random Bastard Operator From Hell excuse for a given question.'
-	end
+  def usage
+    "!bofh - Fetch a random Bastard Operator From Hell excuse."
+  end
 
-	def match?(cmd)
-		cmd =~ /^(!)?bofh$/
-	end
+  def match?(cmd)
+    cmd =~ /^(!)?bofh$/
+  end
 
-	match /bofh (.+)/, method: :bofh, strip_colors: true
+  match /bofh/, method: :bofh, strip_colors: true
 
-	def bofh(m)
-		excuse = EXCUSES.sample
+  def bofh(m)
+    excuse = EXCUSES.sample
 
-		m.reply "The cause of the problem is: #{excuse}"
-	end
+    m.reply excuse
+  end
 end

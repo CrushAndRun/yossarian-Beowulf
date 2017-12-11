@@ -1,4 +1,5 @@
-#  -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
 #  ping.rb
 #  Author: William Woodruff
 #  ------------------------
@@ -8,23 +9,23 @@
 #  This code is licensed by William Woodruff under the MIT License.
 #  http://opensource.org/licenses/MIT
 
-require_relative 'yossarian_plugin'
+require_relative "yossarian_plugin"
 
 class Ping < YossarianPlugin
-	include Cinch::Plugin
-	use_blacklist
+  include Cinch::Plugin
+  use_blacklist
 
-	def usage
-		'!ping - Ping the bot for a timestamped response.'
-	end
+  def usage
+    "!ping - Ping the bot for a timestamped response."
+  end
 
-	def match?(cmd)
-		cmd =~ /^(!)?ping$/
-	end
+  def match?(cmd)
+    cmd =~ /^(!)?ping$/
+  end
 
-	match /ping$/, method: :ping
+  match /ping$/, method: :ping
 
-	def ping(m)
-		m.reply "pong #{Time.now.to_i}", true
-	end
+  def ping(m)
+    m.reply "pong #{Time.now.to_i}", true
+  end
 end

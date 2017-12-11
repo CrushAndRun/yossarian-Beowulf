@@ -1,4 +1,5 @@
-#  -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
 #  xkcd.rb
 #  Author: William Woodruff
 #  ------------------------
@@ -7,31 +8,31 @@
 #  This code is licensed by William Woodruff under the MIT License.
 #  http://opensource.org/licenses/MIT
 
-require 'xkcd'
+require "xkcd"
 
-require_relative 'yossarian_plugin'
+require_relative "yossarian_plugin"
 
 class XKCDComics < YossarianPlugin
-	include Cinch::Plugin
-	use_blacklist
+  include Cinch::Plugin
+  use_blacklist
 
-	def usage
-		'!xkcd [search] - Get a random XKCD comic, or one related to [search].'
-	end
+  def usage
+    "!xkcd [search] - Get a random XKCD comic, or one related to [search]."
+  end
 
-	def match?(cmd)
-		cmd =~ /^(!)?xkcd$/
-	end
+  def match?(cmd)
+    cmd =~ /^(!)?xkcd$/
+  end
 
-	match /xkcd$/, method: :xkcd_random
+  match /xkcd$/, method: :xkcd_random
 
-	def xkcd_random(m)
-		m.reply XKCD.img, true
-	end
+  def xkcd_random(m)
+    m.reply XKCD.img, true
+  end
 
-	match /xkcd (.+)/, method: :xkcd_search, strip_colors: true
+  match /xkcd (.+)/, method: :xkcd_search, strip_colors: true
 
-	def xkcd_search(m, search)
-		m.reply XKCD.search(search), true
-	end
+  def xkcd_search(m, search)
+    m.reply XKCD.search(search), true
+  end
 end

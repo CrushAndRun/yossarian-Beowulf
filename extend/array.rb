@@ -1,9 +1,11 @@
-class Array
-	def exclude?(object)
-		!include?(object)
-	end
+# frozen_string_literal: true
 
-	def nonempty?
-		!empty?
-	end
+class Array
+  def exclude?(object)
+    !include?(object)
+  end
+
+  def nonempty?
+    !empty?
+  end
 end

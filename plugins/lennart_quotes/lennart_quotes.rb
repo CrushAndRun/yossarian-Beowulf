@@ -1,4 +1,5 @@
-#  -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
 #  lennart_quotes.rb
 #  Author: William Woodruff
 #  ------------------------
@@ -8,26 +9,26 @@
 #  This code is licensed by William Woodruff under the MIT License.
 #  http://opensource.org/licenses/MIT
 
-require_relative '../yossarian_plugin'
+require_relative "../yossarian_plugin"
 
 class LennartQuotes < YossarianPlugin
-	include Cinch::Plugin
-	use_blacklist
+  include Cinch::Plugin
+  use_blacklist
 
-	QUOTES_FILE = File.expand_path(File.join(File.dirname(__FILE__), 'lennart_quotes.txt'))
-	QUOTES = File.readlines(QUOTES_FILE)
+  QUOTES_FILE = File.expand_path(File.join(File.dirname(__FILE__), "lennart_quotes.txt"))
+  QUOTES = File.readlines(QUOTES_FILE)
 
-	def usage
-		'!lennart [nick] - Fetch a random Lennart Poettering quote.'
-	end
+  def usage
+    "!lennart - Fetch a random Lennart Poettering quote."
+  end
 
-	def match?(cmd)
-		cmd =~ /^(!)?lennart$/
-	end
+  def match?(cmd)
+    cmd =~ /^(!)?lennart$/
+  end
 
-	match /lennart$/, method: :lennart_quote
+  match /lennart$/, method: :lennart_quote
 
-	def lennart_quote(m)
-		m.reply QUOTES.sample
-	end
+  def lennart_quote(m)
+    m.reply QUOTES.sample
+  end
 end

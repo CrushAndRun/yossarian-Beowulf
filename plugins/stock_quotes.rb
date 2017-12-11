@@ -1,4 +1,5 @@
-#  -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
 #  stock_quotes.rb
 #  Author: William Woodruff
 #  ------------------------
@@ -7,41 +8,41 @@
 #  This code is licensed by William Woodruff under the MIT License.
 #  http://opensource.org/licenses/MIT
 
-require 'open-uri'
-require 'csv'
+require "open-uri"
+require "csv"
 
-require_relative 'yossarian_plugin'
+require_relative "yossarian_plugin"
 
 class StockQuotes < YossarianPlugin
-	include Cinch::Plugin
-	use_blacklist
+  include Cinch::Plugin
+  use_blacklist
 
-	URL = 'http://finance.yahoo.com/d/quotes.csv?s=%{query}&f=snl1p2'
+  URL = "https://download.finance.yahoo.com/d/quotes.csv?s=%{query}&f=snl1p2"
 
-	def usage
-		'!stock <symbol> - Retrieve a stock quote for the given ticker symbol.'
-	end
+  def usage
+    "!stock <symbol> - Retrieve a stock quote for the given ticker symbol."
+  end
 
-	def match?(cmd)
-		cmd =~ /^(!)?stock$/
-	end
+  def match?(cmd)
+    cmd =~ /^(!)?stock$/
+  end
 
-	match /stock (\w+)$/, method: :stock_quote, strip_colors: true
+  match /stock (\w+)$/, method: :stock_quote, strip_colors: true
 
-	def stock_quote(m, symbol)
-		query = URI.encode(symbol)
-		url = URL % { query: query }
+  def stock_quote(m, symbol)
+    query = URI.encode(symbol)
+    url = URL % { query: query }
 
-		begin
-			quote = CSV.parse(open(url).read).first
-			tick, name, trade, change = quote[0..3]
-			if name != 'N/A'
-				m.reply "#{name} (#{tick}) - Trading at $#{trade} (#{change})", true
-			else
-				m.reply "Could not find a quote for #{tick}.", true
-			end
-		rescue Exception => e
-			m.reply e.to_s, true
-		end
-	end
+    begin
+      quote = CSV.parse(open(url).read).first
+      tick, name, trade, change = quote[0..3]
+      if name != "N/A"
+        m.reply "#{name} (#{tick}) - Trading at $#{trade} (#{change})", true
+      else
+        m.reply "Could not find a quote for #{tick}.", true
+      end
+    rescue Exception => e
+      m.reply e.to_s, true
+    end
+  end
 end

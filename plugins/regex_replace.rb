@@ -1,4 +1,5 @@
-#  -*- coding: utf-8 -*-
+# frozen_string_literal: true
+
 #  regex_replace.rb
 #  Author: William Woodruff
 #  ------------------------
@@ -8,34 +9,34 @@
 #  This code is licensed by William Woodruff under the MIT License.
 #  http://opensource.org/licenses/MIT
 
-require_relative 'yossarian_plugin'
+require_relative "yossarian_plugin"
 
 class RegexReplace < YossarianPlugin
-	include Cinch::Plugin
-	use_blacklist
+  include Cinch::Plugin
+  use_blacklist
 
-	def initialize(*args)
-		super
-		@users = {}
-	end
+  def initialize(*args)
+    super
+    @users = {}
+  end
 
-	listen_to :channel
+  listen_to :channel
 
-	def listen(m)
-		if m.message !~ /^s\/([^\/]*)\/([^\/]*)(\/)?$/
-			@users[m.user.nick] = m.message
-		end
-	end
+  def listen(m)
+    if m.message !~ /^s\/([^\/]*)\/([^\/]*)(\/)?$/
+      @users[m.user.nick] = m.message
+    end
+  end
 
-	match /^s\/([^\/]*)\/([^\/]*)(\/)?$/, use_prefix: false, method: :sed
+  match /^s\/([^\/]*)\/([^\/]*)(\/)?$/, use_prefix: false, method: :sed
 
-	def sed(m, orig, repl)
-		if @users.key?(m.user.nick)
-			mod = @users[m.user.nick].sub(Regexp.new(orig), repl)
-			m.reply "#{m.user.nick} probably meant: #{mod}"
-			@users.delete(m.user.nick)
-		else
-			m.reply "No previous message to operate on.", true
-		end
-	end
+  def sed(m, orig, repl)
+    if @users.key?(m.user.nick)
+      mod = @users[m.user.nick].sub(Regexp.new(orig), repl)
+      m.reply "#{m.user.nick} probably meant: #{mod}"
+      @users.delete(m.user.nick)
+    else
+      m.reply "No previous message to operate on.", true
+    end
+  end
 end
